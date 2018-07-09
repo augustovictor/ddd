@@ -110,3 +110,45 @@ Strive for the ideal modeling composition of 1:1 relationships between the bound
 
 ![](img/ideal-modeling-composition.png)
 
+## Strategic Desigh with Context Mapping
+
+### Kinds of mapping
+
+- Partnership: Two teams work on two different bounded contexts with a common goal.
+    - Visual representation: Thick line
+- Shared kernel: At leas two teams have a very similar software model. So they develop a part of the model that both are going to use.
+    - Visual representation: Intersection between the two circles with crossing lines fulfilling this part.
+- Customer supplier: There is a well defined upstream and downstream between two teams. It means that changes on upstream team impacts the downstream team team. These changes must be negotiated.    
+    - Visual representation: Line with U (Upstream) and D (Downstream)
+- Conformist: Same as `Customer supplier` but in terms of `Model` where the upstream team model impacts the downstream team model. The downstream team will basically consume the upstream team model only.
+- Anti-corruption layer: There is an upstream and downstream team but the downstream team does not want to influenced by the upstream team unnecessarily. Structured as the `Conformist` but the downstream team will consume the upstream team data and translates that to its own model by using an ACL (Anti-Corruption Layer).
+
+- Open Host Service: Well documented and well defined model to consume.
+- Published Language: The upstream team produces a well defined and documented exchange format that allows the donwstream team to consume data from upstream team.
+- Separate Ways: Describes what kinds of integrations could take place between two teams. But for whatever reason the other team decides to create their own solution instead of consuming what the other team has developed.
+- Big ball of mud: Changes in one part of the model impacts a model in another area. In order to integrate with a ball of mud try to use an `ACL` where the ball of mud is the upstream and your model is the downstream.
+
+### Integration patterns with Context Mappig
+
+#### RPC with soap
+![](img/rpc-with-soap.png)
+![](img/rpc-with-soap-communication.png)
+
+Disadvantage: Due to network failures tasks might not be completed.
+
+#### RESTful HTTP
+![](img/rest-http.png)
+![](img/rest-http-communication.png)
+
+We can experience the same network issues.
+
+Let clients consume data the way they want.
+
+#### Messaging
+![](img/messaging.png)
+![](img/messaging-aggregate.png)
+
+If the message is delivered more than once the receiver should be able to deduplicate it.
+
+![](img/message-content.png)
+![](img/message-more-info.png)
